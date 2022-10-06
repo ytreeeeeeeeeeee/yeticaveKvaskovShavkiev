@@ -1,24 +1,9 @@
 <main>
 <nav class="nav">
     <ul class="nav__list container">
-        <li class="nav__item">
-            <a href="all-lots.html">Доски и лыжи</a>
-        </li>
-        <li class="nav__item">
-            <a href="all-lots.html">Крепления</a>
-        </li>
-        <li class="nav__item">
-            <a href="all-lots.html">Ботинки</a>
-        </li>
-        <li class="nav__item">
-            <a href="all-lots.html">Одежда</a>
-        </li>
-        <li class="nav__item">
-            <a href="all-lots.html">Инструменты</a>
-        </li>
-        <li class="nav__item">
-            <a href="all-lots.html">Разное</a>
-        </li>
+        <?php foreach ($categories as $category): ?>
+            <?= include_template('components/nav-element.php', ['category' => $category]) ?>
+        <?php endforeach; ?>
     </ul>
 </nav>
 <form class="form form--add-lot container form--invalid" action="https://echo.htmlacademy.ru" method="post"> <!-- form--invalid -->

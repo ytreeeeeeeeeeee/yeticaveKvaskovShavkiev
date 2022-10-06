@@ -3,17 +3,18 @@
 require_once 'utils/helpers.php';
 require_once 'utils/main-data.php';
 
-$title = 'Добавление лота';
+$title = 'Вход';
 
-$addContent = include_template('add-lot.php', ['categories' => $categories]);
+$loginContent = include_template('login.php', ['categories' => $categories]);
 
 $page_data = [
     'title' => $title,
-    'content' => $addContent,
+    'content' => $loginContent,
     'is_auth' => $is_auth,
     'user_name' => $user_name,
     'categories' => $categories
 ];
 
 $page = include_template('layout.php', $page_data);
+
 echo $page;
