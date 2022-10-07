@@ -11,7 +11,7 @@
                 <span class="lot__cost"><?= price_converter($ad["price"]) ?></span>
             </div>
             <div class="lot__timer timer">
-                12:23
+                <?= get_dt_range($ad["date"]) ?>
             </div>
         </div>
     </div>

@@ -11,4 +11,7 @@ function price_converter($price) {
     }
 }
 
-?>
+function get_dt_range($date) {
+    $interval = strtotime($date) - strtotime("now");
+    return intdiv($interval, 3600) . ":" . $interval%60;
+}
