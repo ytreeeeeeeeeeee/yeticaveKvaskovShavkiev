@@ -13,7 +13,7 @@ $ads = [
         "category" => $categories[0],
         "price" => "10999",
         "url" => "img/lot-1.jpg",
-        "date" => "2022-10-09"
+        "date" => "2022-10-07 12:00:00"
     ],
 
     [

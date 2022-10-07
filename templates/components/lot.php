@@ -10,7 +10,7 @@
                 <span class="lot__amount">Стартовая цена</span>
                 <span class="lot__cost"><?= price_converter($ad["price"]) ?></span>
             </div>
-            <div class="lot__timer timer">
+            <div class="lot__timer timer <?= one_hour_left($ad["date"]) ?>">
                 <?= get_dt_range($ad["date"]) ?>
             </div>
         </div>
