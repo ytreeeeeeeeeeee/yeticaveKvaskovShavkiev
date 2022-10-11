@@ -16,7 +16,7 @@ CREATE TABLE users (
    email VARCHAR(100) NOT NULL UNIQUE,
    user_name VARCHAR(50) NOT NULL,
    password  VARCHAR(255) NOT NULL,
-   contact VARCHAR(15) NOT NULL
+   contact VARCHAR(15) NOT NULL UNIQUE
 );
 
 
@@ -27,10 +27,10 @@ CREATE TABLE lots (
   description TEXT NOT NULL,
   image_url VARCHAR(150) NOT NULL,
   start_price DECIMAL NOT NULL,
-  end_date  DATE NOT NULL,
+  end_date  DATETIME NOT NULL,
   bet_step  INT NOT NULL,
   author_id INT NOT NULL,
-  winner_id INT NOT NULL,
+  winner_id INT,
   category_id INT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES users(id),
   FOREIGN KEY (winner_id) REFERENCES users(id),
