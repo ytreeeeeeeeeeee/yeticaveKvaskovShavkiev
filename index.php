@@ -8,7 +8,7 @@ require_once 'utils/init.php';
 
 $categories = $con->query("SELECT * FROM categories")->fetchAll();
 
-$ads = $con->query("SELECT l.title, c.title AS category, l.image_url, l.start_price, l.end_date FROM lots l JOIN categories c ON l.category_id = c.id WHERE l.end_date > NOW() ORDER BY l.date_of_creation DESC LIMIT 6")->fetchAll();
+$ads = $con->query("SELECT l.id, l.title, c.title AS category, l.image_url, l.start_price, l.end_date FROM lots l JOIN categories c ON l.category_id = c.id WHERE l.end_date > NOW() ORDER BY l.date_of_creation DESC LIMIT 6")->fetchAll();
 
 
 $title = 'Главная';
