@@ -18,7 +18,10 @@ VALUES ("2022-10-06 15:00:00", "2014 Rossignol District Snowboard", "JDSVSHJGDHV
        ("2022-10-08 15:00:00", "Крепления Union Contact Pro 2015 года размер L/XL", "DSDF", "img/lot-3.jpg", 8000, "2022-10-23 15:00:00", 100, 5, NULL, 2),
        ("2022-10-08 13:00:01", "Ботинки для сноуборда DC Mutiny Charocal", "Pogf", "img/lot-4.jpg", "10999", "2022-10-09 13:00:00", 100, 4, NULL, 1),
        ("2022-10-05 18:00:00", "Куртка для сноуборда DC Mutiny Charocal", "dsfdf", "img/lot-5.jpg", "7500", "2022-10-09 15:00:00", 200, 1, 3, 2),
-       ("2022-10-06", "Маска Oakley Canopy", "fdf", "img/lot-6.jpg", "5400", "2022-10-09 17:00:00", 100, 6, 2, 1);
+       ("2022-10-06", "Маска Oakley Canopy", "fdf", "img/lot-6.jpg", "5400", "2022-10-09 17:00:00", 100, 6, 2, 1),
+       ("2022-10-08 15:00:00","Крепления Union Contact Pro 2015 года размер L/XL","Крепления", "img/lot-3.jpg", 8000, "2023-10-23 15:00:00", 100, 5, NULL, 2),
+       ("2022-10-06 15:00:00", "2014 Rossignol District Snowboard", "Snowboard", "img/lot-1.jpg", 10999, "2022-10-16 12:00:00", 100, 6, NULL, 1),
+       ("2022-10-07 15:00:00", "DC Ply Mens 2016/2017 Snowboard", "Snowboard", "img/lot-2.jpg", 15999, "2022-10-11 15:00:00", 100, 1, 6, 2);
 
 INSERT INTO bets(date_bet, bet_amount, user_id, lot_id) VALUES ("2022-10-08 15:22:32", 12000, 5, 2),
                                                                ("2022-10-08 15:25:32", 13000, 2, 2),
