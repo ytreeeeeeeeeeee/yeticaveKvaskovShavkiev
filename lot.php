@@ -1,23 +1,36 @@
 <?php
 
+require_once 'utils/init.php';
+require_once 'utils/main-data.php';
+require_once 'utils/helpers.php';
+require_once 'utils/functions.php';
+
 $categories = $con->query("SELECT * FROM categories")->fetchAll();
 
-$id = $_GET['id'];
+$id = intval($_GET['id'] ?? null);
 
-$sql = "SELECT
+$sql_lot = "SELECT
             l.title,
             l.description,
             l.image_url,
             l.start_price,
+            l.end_date,
             c.title AS category
-        FROM lot l
+        FROM lots l
         JOIN categories c ON l.category_id = c.id
-        WHERE l.id = ?";
+        WHERE l.id=?";
 
-$title = $;
+$stmt_lot = $con->prepare($sql_lot);
+$stmt_lot->execute([$id]);
+$lot_info = $stmt_lot->fetch();
 
+$top_bet = top_bet($id);
 
-$lotContent = include_template('lot-page.php', ['categories' => $categories]);
+$min_bet = min_next_bet($id, $top_bet);
+
+$title = $lot_info['title'];
+
+$lotContent = include_template('lot-page.php', ['categories' => $categories, 'lot_info' => $lot_info, 'top_bet' => $top_bet, 'min_bet' => $min_bet]);
 
 $page_data = [
     'title' => $title,
