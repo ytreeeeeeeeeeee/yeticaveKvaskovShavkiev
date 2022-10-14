@@ -8,15 +8,13 @@ require_once 'utils/init.php';
 
 $categories = $con->query("SELECT * FROM categories")->fetchAll();
 
-$ads = $con->query("SELECT l.id, l.title, l.start_price, c.title AS category, l.image_url, l.end_date FROM lots l JOIN categories c ON l.category_id = c.id WHERE l.end_date > NOW() ORDER BY l.date_of_creation DESC LIMIT 6")->fetchAll();
+$title = 'Error 404';
 
-$title = 'Главная';
-
-$indexContent = include_template('main.php', ['ads' => $ads, 'categories' => $categories]);
+$errorContent = include_template('error.php', ['categories' => $categories]);
 
 $page_data = [
     'title' => $title,
-    'content' => $indexContent,
+    'content' => $errorContent,
     'is_auth' => $is_auth,
     'user_name' => $user_name,
     'categories' => $categories

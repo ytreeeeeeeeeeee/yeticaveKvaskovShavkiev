@@ -1,6 +1,5 @@
 <?php
 
-require_once 'utils/init.php';
 date_default_timezone_set("Europe/Moscow");
 
 function price_converter($price) {
@@ -29,14 +28,12 @@ function get_dt_range($date) {
 
 function one_hour_left($date) {
     $interval = strtotime($date) - strtotime("now");
-    if (intdiv($interval, 3600)) {
+    if (intdiv($interval, 3600) < 1) {
         return "timer--finishing";
     }
 }
 
-function top_bet($id) {
-    global $con;
-
+function top_bet($id, $con) {
     $sql_bet = "SELECT bet_amount
             FROM bets
             WHERE lot_id = ?
@@ -63,9 +60,7 @@ function top_bet($id) {
     }
 }
 
-function min_next_bet($id, $top_bet) {
-    global  $con;
-
+function min_next_bet($id, $top_bet, $con) {
     $sql = "SELECT bet_step
             FROM lots
             WHERE id = ?";
