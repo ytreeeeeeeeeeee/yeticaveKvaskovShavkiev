@@ -71,3 +71,38 @@ function min_next_bet($id, $top_bet, $con) {
 
     return $top_bet + $bet_step;
 }
+
+function validateImage() {
+    if (!empty($_FILES['photo']['name'])) {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $tmp_name = $_FILES['photo']['tmp_name'];
+        $file_type = finfo_file($finfo, $tmp_name);
+        if ($file_type !== "image/jpeg" && $file_type !== "image/jpg" && $file_type !== "image/png"){
+            return false;
+        }
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function validateStartPrice() {
+    if (!empty($_POST['lot-rate'])) {
+        if ($_POST['lot-rate'] <= 0) {
+            return "Стартовая цена меньше нуля";
+        }
+        return true;
+    }
+    return "Введите стартовую цену";
+}
+
+function validateEndDate() {
+    if (!empty($_POST['lot-date'])) {
+        if (date_create($_POST['lot-date']) > date('Y-m-d')){
+            return "введите другую дату";
+        }
+        return true;
+    }
+    return "Введите дату";
+}

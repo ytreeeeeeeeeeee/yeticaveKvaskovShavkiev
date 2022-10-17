@@ -6,7 +6,7 @@
         <?php endforeach; ?>
     </ul>
 </nav>
-<form class="form form--add-lot container form--invalid" action="https://echo.htmlacademy.ru" method="post"> <!-- form--invalid -->
+<form class="form form--add-lot container form--invalid" action="add-lot.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
     <h2>Добавление лота</h2>
     <div class="form__container-two">
         <div class="form__item form__item--invalid"> <!-- form__item--invalid -->
@@ -18,12 +18,9 @@
             <label for="category">Категория <sup>*</sup></label>
             <select id="category" name="category">
                 <option>Выберите категорию</option>
-                <option>Доски и лыжи</option>
-                <option>Крепления</option>
-                <option>Ботинки</option>
-                <option>Одежда</option>
-                <option>Инструменты</option>
-                <option>Разное</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= $category['id'] ?>"><?= $category['title'] ?></option>
+                <?php endforeach; ?>
             </select>
             <span class="form__error">Выберите категорию</span>
         </div>
@@ -36,7 +33,7 @@
     <div class="form__item form__item--file">
         <label>Изображение <sup>*</sup></label>
         <div class="form__input-file">
-            <input class="visually-hidden" type="file" id="lot-img" value="">
+            <input name="img" class="visually-hidden" type="file" id="lot-img" value="">
             <label for="lot-img">
                 Добавить
             </label>
