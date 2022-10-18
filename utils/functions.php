@@ -73,17 +73,18 @@ function min_next_bet($id, $top_bet, $con) {
 }
 
 function validateImage() {
-    if (!empty($_FILES['photo']['name'])) {
+    if (!empty($_FILES['img']['name'])) {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $tmp_name = $_FILES['photo']['tmp_name'];
+        $tmp_name = $_FILES['img']['tmp_name'];
         $file_type = finfo_file($finfo, $tmp_name);
+        var_dump($file_type);
         if ($file_type !== "image/jpeg" && $file_type !== "image/jpg" && $file_type !== "image/png"){
-            return false;
+            return "Прикрепите фотография с расширением ....";
         }
-        return true;
+        return null;
     }
     else {
-        return false;
+        return "Прикрепите фото";
     }
 }
 
@@ -92,17 +93,60 @@ function validateStartPrice() {
         if ($_POST['lot-rate'] <= 0) {
             return "Стартовая цена меньше нуля";
         }
-        return true;
+        if (!is_numeric($_POST['lot-rate'])) {
+            return "Введите число";
+        }
+        return null;
     }
     return "Введите стартовую цену";
 }
 
 function validateEndDate() {
     if (!empty($_POST['lot-date'])) {
-        if (date_create($_POST['lot-date']) > date('Y-m-d')){
-            return "введите другую дату";
+        if (is_date_valid($_POST['lot-date'])) {
+            if (date_create($_POST['lot-date']) > date('Y-m-d', strtotime("+1 day"))){
+                return "введите другую дату";
+            }
+            return null;
         }
-        return true;
+        return "Введите дату в верном формате";
     }
     return "Введите дату";
+}
+
+function validateLotStep() {
+    if (!empty($_POST["lot-step"])) {
+        if (is_numeric($_POST['lot-step'])) {
+            if (strpos($_POST['lot-step'], ".")) {
+                return "Введите целое число";
+            }
+            if ($_POST["lot-step"] <= 0) {
+                return "Шаг ставки должен быть больше 0";
+            }
+            return null;
+        }
+        return "Введите число";
+    }
+    return "Поле должно быть заполнено!";
+}
+
+function validateLotName() {
+    if (!empty($_POST['lot-name'])) {
+        return null;
+    }
+    return "Это поле должно быть заполненым";
+}
+
+function validateCategory($id, $allowed_list) {
+    if (!in_array($id, $allowed_list)) {
+        return "Выберите категорию";
+    }
+    return null;
+}
+
+function validateDescription() {
+    if (!empty($_POST['message'])) {
+        return null;
+    }
+    return "Поле должно быть заполненным!";
 }
