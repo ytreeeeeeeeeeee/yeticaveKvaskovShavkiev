@@ -10,7 +10,7 @@ $categories = $con->query("SELECT * FROM categories")->fetchAll();
 $title = 'Добавление лота';
 
 if ($is_auth == 0) {
-    header("Location: login.php");
+    header("Location: http://yeti/login.php");
     exit;
 }
 
@@ -50,13 +50,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $errors = array_filter($errors);
 
-    var_dump($errors);
-    die;
+    if (isset($_FILES['img']) && empty($errors)) {
+        $file_name = $_FILES['img']['name'];
+        $file_path = __DIR__ . '/uploads/';
+        $file_url = '/uploads/' . $file_name;
+        move_uploaded_file($_FILES['img']['tmp_name'], $file_path . $file_name);
+    }
+
+    if (empty($errors)) {
+        $sql = "INSERT INTO lots(date_of_creation, title, description, image_url, start_price, end_date, bet_step, author_id, category_id) VALUES
+                                                                                                                               (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $con->prepare($sql);
+        $stmt->execute([$post['lot-name'], $post['message'], $file_url, $post['lot-rate'], $post['lot-date'], $post['lot-step'], 1, $post['category']]);
+
+        header("Location: https://yeti/lot.php?id=" . $con->lastInsertId());
+    }
 }
 
 
 
-$addContent = include_template('add-lot.php', ['categories' => $categories]);
+$addContent = include_template('add-lot.php', ['categories' => $categories, 'errors' => $errors]);
 
 $page_data = [
     'title' => $title,

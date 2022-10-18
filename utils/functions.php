@@ -79,7 +79,7 @@ function validateImage() {
         $file_type = finfo_file($finfo, $tmp_name);
         var_dump($file_type);
         if ($file_type !== "image/jpeg" && $file_type !== "image/jpg" && $file_type !== "image/png"){
-            return "Прикрепите фотография с расширением ....";
+            return "Прикрепите фотография с расширением jpeg, jpg или png";
         }
         return null;
     }
@@ -104,7 +104,7 @@ function validateStartPrice() {
 function validateEndDate() {
     if (!empty($_POST['lot-date'])) {
         if (is_date_valid($_POST['lot-date'])) {
-            if (date_create($_POST['lot-date']) > date('Y-m-d', strtotime("+1 day"))){
+            if (date('Y-m-d', strtotime($_POST['lot-date'])) < date('Y-m-d', strtotime("+1 day"))){
                 return "введите другую дату";
             }
             return null;
@@ -149,4 +149,10 @@ function validateDescription() {
         return null;
     }
     return "Поле должно быть заполненным!";
+}
+
+function addErrorContainer($title, $errors) {
+    if (array_key_exists($title, $errors)) {
+        return "form__item--invalid";
+    }
 }

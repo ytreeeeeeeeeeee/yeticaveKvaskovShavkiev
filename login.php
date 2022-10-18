@@ -2,8 +2,11 @@
 
 require_once 'utils/helpers.php';
 require_once 'utils/main-data.php';
+require_once 'utils/init.php';
 
 $title = 'Вход';
+
+$categories = $con->query("SELECT * FROM categories")->fetchAll();
 
 $loginContent = include_template('login.php', ['categories' => $categories]);
 
