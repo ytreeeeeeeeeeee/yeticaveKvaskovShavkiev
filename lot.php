@@ -1,7 +1,6 @@
 <?php
 
 require_once 'utils/init.php';
-require_once 'utils/main-data.php';
 require_once 'utils/helpers.php';
 require_once 'utils/functions.php';
 

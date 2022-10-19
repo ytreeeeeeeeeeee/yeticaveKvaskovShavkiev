@@ -1,7 +1,6 @@
 <?php
 
 require_once 'utils/helpers.php';
-require_once 'utils/main-data.php';
 require_once 'utils/functions.php';
 require_once 'utils/init.php';
 
@@ -34,6 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    $sql = "SELECT email FROM users WHERE email = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->execute([$_POST['email']]);
+    $email_array = $stmt->fetch();
+    if (!empty($email_array)) {
+        $errors['email'] = "Такой Email уже зарегестрирован";
+    }
+
     $errors = array_filter($errors);
 
     if (empty($errors)) {
@@ -41,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $con->prepare($sql);
         $stmt->execute([$post['email'], $post['name'], password_hash($post['password'], PASSWORD_DEFAULT), $post['message']]);
 
-        header("Location: https://yeti/login.php");
+        header("Location: https://ye/login.php");
     }
 }
 

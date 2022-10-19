@@ -1,7 +1,6 @@
 <?php
 
 require_once 'utils/helpers.php';
-require_once 'utils/main-data.php';
 require_once 'utils/init.php';
 require_once 'utils/functions.php';
 
@@ -63,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $con->prepare($sql);
         $stmt->execute([$post['lot-name'], $post['message'], $file_url, $post['lot-rate'], $post['lot-date'], $post['lot-step'], 1, $post['category']]);
 
-        header("Location: https://yeti/lot.php?id=" . $con->lastInsertId());
+        header("Location: https://ye/lot.php?id=" . $con->lastInsertId());
     }
 }
 

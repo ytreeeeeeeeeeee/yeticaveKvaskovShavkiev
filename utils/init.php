@@ -15,3 +15,9 @@ try {
 } catch (PDOException $e) {
     die("Ошибка: {$e->getMessage()}");
 }
+
+session_start();
+
+$is_auth = isset($_SESSION['user_id']);
+
+$user_name = $_SESSION['user_name'] ?? "";

@@ -169,15 +169,12 @@ function validateEmail($con) {
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             return "Введите корректный Email";
         }
-
-        $sql = "SELECT email FROM users WHERE email = ?";
-        $stmt = $con->prepare($sql);
-        $stmt->execute([$_POST['email']]);
-        $email_array = $stmt->fetch();
-        if (!empty($email_array)) {
-            return "Такой Email уже зарегестрирован";
-        }
         return null;
     }
     return "Поле должно быть заполненным!";
 }
+
+function getPostVal($name) {
+    return $_POST[$name] ?? "";
+}
+
