@@ -156,3 +156,28 @@ function addErrorContainer($title, $errors) {
         return "form__item--invalid";
     }
 }
+
+function validateField($title) {
+    if (!empty($_POST[$title])){
+        return null;
+    }
+    return "Поле должно быть заполнено!";
+}
+
+function validateEmail($con) {
+    if (!empty($_POST['email'])) {
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            return "Введите корректный Email";
+        }
+
+        $sql = "SELECT email FROM users WHERE email = ?";
+        $stmt = $con->prepare($sql);
+        $stmt->execute([$_POST['email']]);
+        $email_array = $stmt->fetch();
+        if (!empty($email_array)) {
+            return "Такой Email уже зарегестрирован";
+        }
+        return null;
+    }
+    return "Поле должно быть заполненным!";
+}
