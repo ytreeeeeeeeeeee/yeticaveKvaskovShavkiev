@@ -51,3 +51,5 @@ WHERE id = 1;
 SELECT * FROM bets
 WHERE lot_id = 2
 ORDER BY date_bet DESC;
+
+CREATE FULLTEXT INDEX search_lot ON lots(title, description);
