@@ -9,7 +9,7 @@ $categories = $con->query("SELECT * FROM categories")->fetchAll();
 $title = 'Добавление лота';
 
 if ($is_auth == 0) {
-    header("Location: http://ye/login.php");
+    header("Location: login.php");
     exit;
 }
 

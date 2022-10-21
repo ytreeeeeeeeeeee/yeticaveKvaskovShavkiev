@@ -24,7 +24,7 @@ $stmt_lot->execute([$id]);
 $lot_info = $stmt_lot->fetch();
 
 if (!$lot_info) {
-    header("Location: http://ye/error.php");
+    header("Location: error.php");
 }
 else {
     $top_bet = top_bet($id, $con);

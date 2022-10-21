@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $con->prepare($sql);
         $stmt->execute([$post['email'], $post['name'], password_hash($post['password'], PASSWORD_DEFAULT), $post['message']]);
 
-        header("Location: https://ye/login.php");
+        header("Location: login.php");
     }
 }
 
