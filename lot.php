@@ -36,6 +36,14 @@ $sql_bets = "SELECT b.date_bet,
                 ORDER BY b.date_bet DESC
                 LIMIT 10";
 
+$sql_cou = "SELECT COUNT(id) as cou
+             FROM bets
+             WHERE lot_id = ?";
+
+$stmt_cou = $con->prepare($sql_cou);
+$stmt_cou->execute([$id]);
+$cou = $stmt_cou->fetch();
+
 $stmt_bets = $con->prepare($sql_bets);
 $stmt_bets->execute([$id]);
 $bets_info = $stmt_bets->fetchAll();
@@ -82,7 +90,8 @@ else {
         'min_bet' => $min_bet,
         'is_auth' => $is_auth,
         'errors' => $errors,
-        'bets_info' => $bets_info
+        'bets_info' => $bets_info,
+        'cou' => $cou
     ]);
 
     $page_data = [

@@ -42,7 +42,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="history">
-                    <h3>История ставок (<span>10</span>)</h3>
+                    <h3>История ставок (<span><?= $cou['cou'] ?></span>)</h3>
                     <table class="history__list">
                         <?php foreach ($bets_info as $bet): ?>
                             <?= include_template('components/table-element.php', ['bet' => $bet]) ?>

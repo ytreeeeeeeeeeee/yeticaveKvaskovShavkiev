@@ -190,3 +190,27 @@ function validateBet($min_bet) {
     }
     return 'Это поле должно быть заполненным';
 }
+
+function date_bet($date) {
+    $interval = date_diff(date_create($date), date_create());
+    if ($interval->format('%I') < 1) {
+        $seconds = $interval->format('%s');
+        $noun = get_noun_plural_form($seconds, 'секунда', 'секунды', 'секунд');
+        return "{$seconds} {$noun} назад";
+    }
+    elseif ($interval->format('%H') < 1) {
+        $minutes = $interval->format('%i');
+        $noun = get_noun_plural_form($minutes, 'минута', 'минуты', 'минут');
+        return "{$minutes} {$noun} назад";
+    }
+    elseif ($interval->format('%d') < 1) {
+        $hours = $interval->format('%h');
+        $noun = get_noun_plural_form($hours, 'час', 'часа', 'часов');
+        return "{$hours} {$noun} назад";
+    }
+    else {
+        $date_form = date_format($date, "d.m.Y");
+        $time_form = date_format($date, "H:i");
+        return "{$date_form} в {$time_form}";
+    }
+}
