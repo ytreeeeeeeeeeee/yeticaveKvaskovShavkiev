@@ -8,6 +8,10 @@ $categories = $con->query("SELECT * FROM categories")->fetchAll();
 
 $id = intval($_GET['id'] ?? null);
 
+$top_bet = top_bet($id, $con);
+
+$min_bet = min_next_bet($id, $top_bet, $con);
+
 $sql_lot = "SELECT
             l.title,
             l.description,
@@ -23,17 +27,63 @@ $stmt_lot = $con->prepare($sql_lot);
 $stmt_lot->execute([$id]);
 $lot_info = $stmt_lot->fetch();
 
+$sql_bets = "SELECT b.date_bet,
+                b.bet_amount,
+                u.user_name
+                FROM bets b
+                JOIN users u ON b.user_id = u.id
+                WHERE b.lot_id = ?
+                ORDER BY b.date_bet DESC
+                LIMIT 10";
+
+$stmt_bets = $con->prepare($sql_bets);
+$stmt_bets->execute([$id]);
+$bets_info = $stmt_bets->fetchAll();
+
+$post = $_POST;
+$rules = [
+    'cost' => function () use ($min_bet) {
+        return validateBet($min_bet);
+    }
+];
+$errors = [];
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    foreach ($post as $key => $value) {
+        if (isset($rules[$key])){
+            $rule = $rules[$key];
+            $errors[$key] = $rule($value);
+        }
+    }
+
+    $errors = array_filter($errors);
+
+    if (empty($errors)) {
+        $sql = "INSERT INTO bets(date_bet, bet_amount, user_id, lot_id) VALUES (NOW(), ?, ?, ?)";
+        $stmt = $con->prepare($sql);
+        $stmt->execute([$post['cost'], $_SESSION['user_id'], $id]);
+    }
+
+    header("Location: lot.php?id={$id}");
+    exit();
+}
+
 if (!$lot_info) {
     header("Location: error.php");
+    exit();
 }
 else {
-    $top_bet = top_bet($id, $con);
-
-    $min_bet = min_next_bet($id, $top_bet, $con);
-
     $title = $lot_info['title'];
 
-    $lotContent = include_template('lot-page.php', ['categories' => $categories, 'lot_info' => $lot_info, 'top_bet' => $top_bet, 'min_bet' => $min_bet]);
+    $lotContent = include_template('lot-page.php', ['id' => $id,
+        'categories' => $categories,
+        'lot_info' => $lot_info,
+        'top_bet' => $top_bet,
+        'min_bet' => $min_bet,
+        'is_auth' => $is_auth,
+        'errors' => $errors,
+        'bets_info' => $bets_info
+    ]);
 
     $page_data = [
         'title' => $title,

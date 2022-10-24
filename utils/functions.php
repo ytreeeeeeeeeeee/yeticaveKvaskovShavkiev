@@ -178,3 +178,15 @@ function getPostVal($name) {
     return $_POST[$name] ?? "";
 }
 
+function validateBet($min_bet) {
+    if (!empty($_POST['cost'])) {
+        if (!is_numeric($_POST['cost'])) {
+            return "Введите число";
+        }
+        if ($_POST['cost'] < $min_bet) {
+            return 'Введите коррктную цену';
+        }
+        return null;
+    }
+    return 'Это поле должно быть заполненным';
+}
