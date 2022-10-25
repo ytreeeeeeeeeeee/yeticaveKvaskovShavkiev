@@ -45,7 +45,7 @@
                     <h3>История ставок (<span><?= $cou['cou'] ?></span>)</h3>
                     <table class="history__list">
                         <?php foreach ($bets_info as $bet): ?>
-                            <?= include_template('components/table-element.php', ['bet' => $bet]) ?>
+                            <?= include_template('components/table-bet-element.php', ['bet' => $bet]) ?>
                         <?php endforeach; ?>
                     </table>
                 </div>

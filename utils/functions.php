@@ -193,7 +193,12 @@ function validateBet($min_bet) {
 
 function date_bet($date) {
     $interval = date_diff(date_create($date), date_create());
-    if ($interval->format('%I') < 1) {
+    if ($interval->d >= 1) {
+        $date_form = date_format(date_create($date), "d.m.Y");
+        $time_form = date_format(date_create($date), "H:i");
+        return "{$date_form} в {$time_form}";
+    }
+    elseif ($interval->format('%I') < 1) {
         $seconds = $interval->format('%s');
         $noun = get_noun_plural_form($seconds, 'секунда', 'секунды', 'секунд');
         return "{$seconds} {$noun} назад";
@@ -207,10 +212,5 @@ function date_bet($date) {
         $hours = $interval->format('%h');
         $noun = get_noun_plural_form($hours, 'час', 'часа', 'часов');
         return "{$hours} {$noun} назад";
-    }
-    else {
-        $date_form = date_format($date, "d.m.Y");
-        $time_form = date_format($date, "H:i");
-        return "{$date_form} в {$time_form}";
     }
 }
