@@ -31,11 +31,11 @@
                         </div>
                     </div>
                     <?php if ($is_auth == 1): ?>
-                        <form class="lot-item__form" action="lot.php?id=<?= $id ?>" method="post" autocomplete="off" enctype="multipart/form-data">
+                        <form class="lot-item__form" action="http://ye/lot.php?id=<?= $id ?>" method="post" autocomplete="off">
                             <p class="lot-item__form-item form__item <?= empty($errors) ? "" : "form__item--invalid" ?>">
                                 <label for="cost">Ваша ставка</label>
                                 <input id="cost" type="text" name="cost" placeholder="<?= rtrim(price_converter($min_bet), " ₽") ?>">
-                                <span class="form__error"><?= $errors['cost'] ?></span>
+                                <span class="form__error"><?= $errors["cost"] ?></span>
                             </p>
                             <button type="submit" class="button">Сделать ставку</button>
                         </form>

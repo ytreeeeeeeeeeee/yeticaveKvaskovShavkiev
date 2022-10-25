@@ -70,10 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql = "INSERT INTO bets(date_bet, bet_amount, user_id, lot_id) VALUES (NOW(), ?, ?, ?)";
         $stmt = $con->prepare($sql);
         $stmt->execute([$post['cost'], $_SESSION['user_id'], $id]);
+        header("Location: lot.php?id={$id}");
     }
-
-    header("Location: lot.php?id={$id}");
-    exit();
 }
 
 if (!$lot_info) {
