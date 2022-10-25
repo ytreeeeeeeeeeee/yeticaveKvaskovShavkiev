@@ -25,7 +25,7 @@
         <h2>Мои ставки</h2>
         <table class="rates__list">
            <?php foreach ($list_bets as $bet): ?>
-                <?= include_template('components/my-bets-element.php', ['bet' => $bet]) ?>
+                <?= include_template('components/my-bets-element.php', ['bet' => $bet, 'con' => $con]) ?>
            <?php endforeach; ?>
         </table>
     </section>

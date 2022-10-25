@@ -15,12 +15,13 @@ $sql_bets = "SELECT b.date_bet,
                 c.title as category,
                 l.id as lot_id,
                 u.contact,
-                l.winner_id
+                b.id as bet_id
                 FROM bets b
                 JOIN users u ON b.user_id = u.id
                 JOIN lots l ON b.lot_id = l.id
                 JOIN categories c ON l.category_id = c.id
-                WHERE u.id = ?";
+                WHERE u.id = ?
+                ORDER BY b.date_bet DESC";
 
 $stmt = $con->prepare($sql_bets);
 $stmt->execute([$_SESSION['user_id']]);
@@ -28,7 +29,7 @@ $list_bets = $stmt->fetchAll();
 
 $title = 'Мои ставки';
 
-$mybetsContent = include_template('my-bets.php', ['categories' => $categories, 'list_bets' => $list_bets]);
+$mybetsContent = include_template('my-bets.php', ['categories' => $categories, 'list_bets' => $list_bets, 'con' => $con]);
 
 $page_data = [
     'title' => $title,

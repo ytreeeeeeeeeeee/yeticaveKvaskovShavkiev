@@ -214,3 +214,37 @@ function date_bet($date) {
         return "{$hours} {$noun} назад";
     }
 }
+
+function winner_bet($con, $lot_id) {
+    $sql_winner = "SELECT b.id
+                FROM bets b
+                JOIN lots l ON b.lot_id = l.id
+                JOIN users u ON b.user_id = u.id
+                WHERE u.id = ? AND b.bet_amount = (SELECT MAX(bet_amount) FROM bets WHERE lot_id = ?) AND l.winner_id IS NOT NULL";
+
+    $stmt_winner = $con->prepare($sql_winner);
+    $stmt_winner->execute([$_SESSION['user_id'], $lot_id]);
+    $win_bets = $stmt_winner->fetchAll();
+
+    $bets = [];
+    foreach ($win_bets as $win) {
+        $bets[] = $win['id'];
+    }
+    return $bets;
+}
+
+function end_lot_time($end_date) {
+    if (date_create($end_date) < date_create()){
+        return true;
+    }
+    return false;
+}
+
+function end_or_win_lot(bool $end_time, bool $win){
+    if ($end_time) {
+        if ($win)
+            return "rates__item--win";
+        return "rates__item--end";
+    }
+    return "";
+}
