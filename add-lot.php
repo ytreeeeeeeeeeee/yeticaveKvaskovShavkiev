@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $con->prepare($sql);
         $stmt->execute([$post['lot-name'], $post['message'], $file_url, $post['lot-rate'], $post['lot-date'], $post['lot-step'], 1, $post['category']]);
 
-        header("Location: https://ye/lot.php?id=" . $con->lastInsertId());
+        header("Location: lot.php?id=" . $con->lastInsertId());
     }
 }
 

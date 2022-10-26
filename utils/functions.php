@@ -77,7 +77,6 @@ function validateImage() {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $tmp_name = $_FILES['img']['tmp_name'];
         $file_type = finfo_file($finfo, $tmp_name);
-        var_dump($file_type);
         if ($file_type !== "image/jpeg" && $file_type !== "image/jpg" && $file_type !== "image/png"){
             return "Прикрепите фотография с расширением jpeg, jpg или png";
         }
@@ -181,7 +180,7 @@ function getPostVal($name) {
 function validateBet($min_bet) {
     if (!empty($_POST['cost'])) {
         if (!is_numeric($_POST['cost'])) {
-            return "Введите число";
+            return "Введите число без пробелов";
         }
         if ($_POST['cost'] < $min_bet) {
             return 'Введите коррктную цену';
@@ -220,7 +219,7 @@ function winner_bet($con, $lot_id) {
                 FROM bets b
                 JOIN lots l ON b.lot_id = l.id
                 JOIN users u ON b.user_id = u.id
-                WHERE u.id = ? AND b.bet_amount = (SELECT MAX(bet_amount) FROM bets WHERE lot_id = ?) AND l.winner_id IS NOT NULL";
+                WHERE l.winner_id = ? AND b.bet_amount = (SELECT MAX(bet_amount) FROM bets WHERE lot_id = ?)";
 
     $stmt_winner = $con->prepare($sql_winner);
     $stmt_winner->execute([$_SESSION['user_id'], $lot_id]);

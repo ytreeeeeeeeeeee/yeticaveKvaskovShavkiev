@@ -14,7 +14,7 @@ $sql_bets = "SELECT b.date_bet,
                 l.image_url,
                 c.title as category,
                 l.id as lot_id,
-                u.contact,
+                (SELECT u.contact FROM users u WHERE u.id = l.author_id) as contact,
                 b.id as bet_id
                 FROM bets b
                 JOIN users u ON b.user_id = u.id

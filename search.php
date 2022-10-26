@@ -28,7 +28,12 @@ if($pageNum < 1 or $pageNum > $pageCount){
 
 $offset = ($pageNum - 1) * $limit;
 
-$stmt = $con->prepare("SELECT l.id, l.title, c.title AS category, l.image_url, l.start_price, l.end_date
+$stmt = $con->prepare("SELECT l.id,
+                                l.title,
+                                c.title AS category,
+                                l.image_url,
+                                IFNULL((SELECT MAX(b.bet_amount) FROM bets b WHERE b.lot_id = l.id), l.start_price) as start_price,
+                                l.end_date
                                 FROM lots l
                                 JOIN categories c
                                 ON l.category_id = c.id

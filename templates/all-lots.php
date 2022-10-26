@@ -23,7 +23,7 @@
     </nav>
     <div class="container">
         <section class="lots">
-            <h2>Все лоты в категории <span>«Доски и лыжи»</span></h2>
+            <h2>Все лоты</h2>
             <ul class="lots__list">
                 <?php foreach ($ads as $ad): ?>
                     <?= include_template('components/lot.php', ['ad' => $ad]) ?>
